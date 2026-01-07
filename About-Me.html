@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AeroStride</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation Styles */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 3rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            width: 60px;
+            height: auto;
+        }
+
+        .brand-name {
+            color: #000;
+            font-size: 1.6rem;
+            font-weight: 600;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #000;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            display: block;
+        }
+
+        .nav-link:hover {
+            color: #666;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 220px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 0.5rem;
+        }
+
+        .nav-item:hover .dropdown,
+        .nav-item.active .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-link.has-dropdown {
+            cursor: pointer;
+        }
+
+        .dropdown-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.3s;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f8f8;
+        }
+
+        .dropdown-link {
+            color: #000;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1600&h=600&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background: white;
+            margin: 40px auto;
+            padding: 60px 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #000;
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #000;
+            font-weight: 300;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .section p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #555;
+            font-weight: 300;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+            align-items: center;
+        }
+
+        .section img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .skill-box {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid #000;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .skill-box h3 {
+            color: #000;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .skill-box p {
+            margin: 0;
+            font-size: 1em;
+        }
+
+        .goal-section {
+            background: #000;
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 40px auto;
+        }
+
+        .goal-section h2 {
+            color: white;
+            border-bottom: 3px solid white;
+            display: inline-block;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .goal-section p {
+            font-size: 1.2em;
+            line-height: 1.9;
+            max-width: 900px;
+            margin: 0 auto 25px auto;
+            color: white;
+            font-weight: 300;
+        }
+
+        footer {
+            background: #000;
+            color: #888;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 60px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        @media (max-width: 968px) {
+            nav {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .nav-link {
+                font-size: 0.8rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2em;
+            }
+
+            .hero p {
+                font-size: 1.1em;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 40px 25px;
+            }
+
+            .goal-section {
+                padding: 50px 25px;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo-container">
+                <img class="logo-img" src="https://github.com/aalsheikh270-svg/homepage/blob/main/symbol.png?raw=true" alt="AeroStride Logo">
+                <span class="brand-name">AeroStride</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item has-dropdown">
+                    <a href="#products" class="nav-link has-dropdown">Products</a>
+                    <div class="dropdown">
+                        <div class="dropdown-item">
+                            <a href="#soccer-cleats" class="dropdown-link">Soccer Cleats</a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#basketball-sneakers" class="dropdown-link">Basketball Sneakers</a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#running-shoes" class="dropdown-link">Running Shoes</a>
+                        </div>
+                        <div class="dropdown-item">
+                            <a href="#custom-fit" class="dropdown-link">Custom Fit</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#promotion" class="nav-link">Promotions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#innovation" class="nav-link">Innovation</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#investors" class="nav-link">Investors</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#csr" class="nav-link">CSR</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>About Us</h1>
+        <p>From a childhood passion for sports to building a community-focused sporting goods business</p>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Our Journey: From Passion to Performance</h2>
+            <div class="two-column">
+                <img src="https://github.com/aalsheikh270-svg/About-Me/blob/main/soccer.png?raw=true" alt="Our passion for sports" style="order: 2;">
+                <div style="order: 1;">
+                    <p>From the moment our founders could walk, they had a ball at their feet. Sports wasn't just something they did—it was who they were. Whether it was kicking a soccer ball in the backyard until sunset, playing with neighborhood friends, or analyzing every game on TV, sports shaped everything.</p>
+                    <p>As we grew, we realized that our love for sports went beyond just playing. We found ourselves understanding what made teams successful, appreciating the business side of athletics, and noticing how the right equipment could transform someone's performance. We saw how proper gear could prevent injuries and how access to quality sporting goods could mean the difference between giving up and pushing forward.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Why AeroStride Exists</h2>
+            <div class="two-column">
+                <div>
+                    <p>AeroStride was born from a simple realization—premium sports gear should be accessible, innovative, and designed with real athletes in mind. We saw athletes frustrated by generic fits, overpriced equipment, and products that didn't deliver on their promises.</p>
+                    <p>We wanted to create something different: a brand where precision engineering meets personalized fit. Where advice comes from real experience and every athlete—whether taking their first steps or competing at elite levels—feels understood and supported.</p>
+                    <p>That's why we're here: to make high-performance sports footwear more accessible, personal, and inspiring for athletes everywhere.</p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&h=400&fit=crop" alt="AeroStride innovation">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>What Sets Us Apart</h2>
+            <div class="skills-container">
+                <div class="skill-box">
+                    <h3>Athletic Heritage</h3>
+                    <p>We've played multiple sports throughout our lives, with particular passion for soccer, basketball, and running. We understand equipment from an athlete's perspective—we know what works, what doesn't, and why it matters.</p>
+                </div>
+                <div class="skill-box">
+                    <h3>Custom Fit Technology</h3>
+                    <p>Our 3D scanning technology creates truly personalized footwear. No more settling for standard sizes—experience gear designed exclusively for your unique foot geometry.</p>
+                </div>
+                <div class="skill-box">
+                    <h3>Innovation First</h3>
+                    <p>The sports industry evolves constantly. We stay ahead with aerospace-grade materials, carbon fiber propulsion systems, and advanced cushioning technology that delivers real performance gains.</p>
+                </div>
+                <div class="skill-box">
+                    <h3>Sustainable Excellence</h3>
+                    <p>We combine athletic passion with responsible business practices—ethical sourcing, environmental consciousness, and community investment—to create a brand that serves athletes and the planet long-term.</p>
+                </div>
+                <div class="skill-box">
+                    <h3>Genuine Partnership</h3>
+                    <p>This isn't just business for us. Every day, we get to help athletes pursue their passions, push their limits, and achieve their goals. That enthusiasm drives everything we do.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="goal-section">
+            <h2>The Ultimate Goal</h2>
+            <p>Our vision is ambitious: to revolutionize athletic footwear through precision engineering and custom fit technology. A brand where everyone—from youth league players to professional athletes—can find their perfect shoe and unlock their full potential.</p>
+            <p>But beyond business success, we want to contribute to a more active, healthy, and competitive sports community. We want to see more young athletes reaching their potential, more weekend warriors staying injury-free, and more people discovering the joy and discipline that athletics brings to life.</p>
+            <p><strong>AeroStride is our way of turning a lifelong passion into something meaningful—not just for us, but for every athlete who shares that love of sports and the relentless pursuit of excellence.</strong></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 AEROSTRIDE. ALL RIGHTS RESERVED.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem;">BUILT FOR SPEED, DESIGNED TO CONTROL</p>
+    </footer>
+
+    <script>
+        // Toggle dropdown on click for Products menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const productNav = document.querySelector('.nav-item.has-dropdown');
+            const productLink = productNav.querySelector('.nav-link');
+            
+            productLink.addEventListener('click', function(e) {
+    if (window.innerWidth > 968) {
+        // On desktop, toggle dropdown without following link
+        e.preventDefault();
+        productNav.classList.toggle('active');
+    }
+    // On mobile or when clicked again, allow navigation to products.html
+});
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!productNav.contains(e.target)) {
+                    productNav.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
